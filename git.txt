@@ -1,0 +1,16 @@
+git init
+git remote add origin  repo_url
+git remote -v 
+
+
+u - untracked
+A - added and ready to be commited.
+
+git status
+
+git add .  // adds all untracked files
+git add <individual_file> // adds all untracked files
+
+ git commit -m "testing git"
+ git commit -m "testing git"  -m "<Long description" 
+

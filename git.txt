@@ -14,5 +14,9 @@ git add <individual_file> // adds all untracked files
  git commit -m "testing git"
  git commit -m "testing git"  -m "<Long description" 
 
+ git push origin <branch_name>
+
  git checkout -b <branch_name>
+git branch -d <localBranchName>
+  git push origin --delete <remote_branch>
 

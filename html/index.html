@@ -1,13 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
 
-    <p>hello</p>
+
+    <style>
+        /* 
+            selector{
+                key:value
+            }
+
+            selector
+                - id
+                - class
+                - element 
+            combined sector
+                sector_one.selector_two
+                descendent selector
+                direct child selector
+                attribute selector
+                adjescent selector
+                general selector
+         */
+        /* h1 {
+            color: orange;
+            margin:0px;
+        }
+        p{
+            margin: 0;
+        }
+        h2{
+            margin:0;
+        } */
+
+        *{
+            margin:0px;
+            padding: 0px;
+            /* box-sizing: ; */
+        }
+
+        /* 
+            specificity score
+        */
+
+        /* #first , #second, #third{
+            color: teal;
+            background-color: black;
+        } */
+
+        /* .black-background.red {
+            color: red;
+        } */
+        .black-background .red {
+            color: red;
+        }
+        .black-background > .red {
+            color: red;
+        }
+
+        .black-background {
+            /* color: teal; */
+            background-color: black;
+        }
+
+
+        .black-background {}
+
+        /* #third{
+            color:red;
+        } */
+
+
+
+        /* p {
+            color: red;
+        } */
+
+        /* div p {
+            color: red;
+        }
+
+        p {
+            color: orange;
+        } */
+
+
+        ul{
+            list-style-type: none;
+        }
+
+        /* a {
+            text-decoration: none;
+            color: black
+        } */
+
+
+
+    </style>
+
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+
+
+</head>
+
+<body>
+        
+    <ul>
+        <li>
+            <div>
+                <img src="" alt="">
+                name
+            </div>
+        </li>
+        <li>one</li>
+        <li>one</li>
+        <li>one</li>
+        <li>one</li>
+        <li>one</li>
+    </ul>
+
+    <a href="/google">google</a>
+    <a href="/google">google</a>
+    <a href="/google">google</a>
+    <a href="/google">google</a>
+    <a href="/google">google</a>
+    <a href="/google">google</a>
+        
+
+
+    <!-- <p style="color:yellow">hello</p> -->
+    <p id="first" class="black-background">hello</p>
+    <p id="second" class="black-background">seoncd p</p>
+    <p id="third" class="black-background red">third<span class="">inner text</span></p>
+    <p id="third" class="black-background">inner<span class="">inner text<span class="red">grand child</span></span></p>
+
+    <div>
+        <span>span text</span>
+        <p>four</p>
+    </div>
+
+    <h1>heading</h1>
+    <h2>heading 2t2o</h2>
+    <h2>heading 2t2o</h2>
+    <h2>heading 2t2o</h2>
+    <h2>heading 2t2o</h2>
+    <h2>heading 2t2o</h2>
+    <h2>heading 2t2o</h2>
+    <a href="/google">google</a>
 </body>
+
 </html>

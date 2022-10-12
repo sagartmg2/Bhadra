@@ -52,9 +52,18 @@
             background-color: black;
         } */
 
-        .black-background.red {
+
+        /* 0 1 1 */
+        body .black-background {
+            color: black;
+        }
+
+        /* 0 1 0 */
+        .black-background {
             color: red;
         }
+
+        
 
         .black-background .red {
             color: red;
@@ -119,6 +128,12 @@
             color: black !important;
         }
 
+        body ul li.target {
+            /* 0 0 2 */
+            list-style-type: none;
+            color: black  !important
+        }
+
         /* ul  001  { */
         ul {
             list-style-type: none;
@@ -130,9 +145,6 @@
                 id class element
                 000
          */
-
-
-
 
         /* a {
             text-decoration: none;
@@ -151,6 +163,42 @@
         #first-form [name="task_name"] {
             padding: 10px;
         }
+
+        #first-form + h2 + h2 {
+        /* #first-form ~ h2 { */
+            color:rgb(255,0,0);
+        }   
+
+        #first-form + h2 + h2:hover {
+        /* #first-form ~ h2 { */
+            color:rgb(19, 13, 13);
+        }  
+
+        input:focus{
+            padding:10px;
+        }
+
+        /* body h2:first-child{ */
+        /* body h2:nth-child(3n){
+            color:purple
+        } */
+
+        /* h2:first-child{ */
+        /* h2:not(:first-child){ */
+        h2:not(.target-two){
+            color:purple
+        }
+
+        .required-field{
+            color:red;
+        }
+
+        .required::after{
+            content: "*";
+            color:red;
+        }
+
+        
     </style>
 
     <!-- <link rel="stylesheet" href="../css/style.css"> -->
@@ -159,13 +207,34 @@
 </head>
 
 <body>
-
-    <form onsubmit="handleSumbit(event)" id="first-form">
+    <h2>heading two</h2>
+    <form onsubmit="handleSumbit(event)" id="first-form" class="h2">
         <!-- <form onsubmit="handleSumbit()"> -->
+        <!-- <input id="target" placeholder="task name" name="task_name" autofocus /> -->
+        <label for="target">task name<span class="required-field">*</span></label>
         <input id="target" placeholder="task name" name="task_name" />
+        <label>username <span class="required-field">*</span></label>
+        <label class="required">passsowrd</label>
         <input placeholder="useranme" name="username" />
         <input type="submit" value="add text" />
-    </form>
+    </form> 
+    <div>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2 class="target-two">heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+        <h2>heading two</h2>
+    </div>
+    <div>
+        <h2>heading two</h2>
+    </div>
 
     <form onsubmit="handleSumbit(event)" id="second-form">
         <!-- <form onsubmit="handleSumbit()"> -->
@@ -173,6 +242,8 @@
         <input placeholder="useranme" name="username" />
         <input type="submit" value="add text" />
     </form>
+
+    <h2>after second form</h2>
 
     <h1>Task list</h1>
     <ul id="task-list">
@@ -225,9 +296,18 @@
     <script>
         let arr = [] // ["ONE", "two"]
 
-        function deleteTask() {
+        function removeTask(index) {
             // remove the selected element from arr 
             // re-render  || re-create the <ul>list
+            arr =  arr.filter((el,i) => i != index)
+
+            let str = ""
+
+            arr.forEach((el, index) => {
+                str += `<li>${el}<button onclick="removeTask(${index})">delete</button></li>`
+            })
+
+            document.getElementById("task-list").innerHTML = str
 
         }
 
@@ -235,13 +315,13 @@
             event.preventDefault()
 
             arr.push(event.target.task_name.value)
+            event.target.task_name.value = ""
 
             console.log({ arr });
             let str = ""
             // arr.forEach)(_)
-            str = "<li>one</li><li>two</li>"
+            // str = "<li>one</li><li>two</li>"
 
-            document.getElementById("task-list").innerHTML = str
 
             // let new_li = document.createElement("li")
             // new_li.innerText = "static text"
@@ -253,8 +333,10 @@
             // }
 
             arr.forEach((el, index) => {
-                str += `<li>${el}<button>delete</button></li>`
+                str += `<li>${el}<button onclick="removeTask(${index})">delete</button></li>`
             })
+
+            document.getElementById("task-list").innerHTML = str
 
 
 

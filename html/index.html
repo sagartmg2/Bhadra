@@ -40,7 +40,25 @@
         * {
             margin: 0px;
             padding: 0px;
+            box-sizing: border-box;
             /* box-sizing: ; */
+        }
+
+        /* measurement uinits
+            %
+            rem
+            em
+            vh
+            vw
+        */
+
+        body{
+            font-size: 32px;
+        }
+        .box{
+            /* font-size:32px */
+            /* font-size: 2em; */
+            /* font-size: 2rem; */
         }
 
         /* 
@@ -62,8 +80,6 @@
         .black-background {
             color: red;
         }
-
-        
 
         .black-background .red {
             color: red;
@@ -185,7 +201,8 @@
 
         /* h2:first-child{ */
         /* h2:not(:first-child){ */
-        h2:not(.target-two){
+            /*  ! */
+        h2:not(.target-two){   
             color:purple
         }
 
@@ -196,8 +213,31 @@
         .required::after{
             content: "*";
             color:red;
+        }   
+
+        .box{
+            height:200px;
+            width:400px;
+            background-color: teal;
+            display:inline-block;
+            /* border:1px solid red; */
+            /* padding:10px; */
+            /* margin:10px; */
+        }
+        .box.two{
+            background-color: azure;
         }
 
+        .child{
+            width:200px;
+            height:200px;
+            background-color: beige;
+            border: 2px solid black;
+        }
+
+        .container{
+            font-size: 50px;
+        }
         
     </style>
 
@@ -207,6 +247,20 @@
 </head>
 
 <body>
+
+    <div class="container">
+        <div class="box">
+            <div class="child">
+            </div>
+            <div class="child">
+            </div>
+        </div>
+    </div>
+    <div class="box two">
+        content
+    </div>
+
+
     <h2>heading two</h2>
     <form onsubmit="handleSumbit(event)" id="first-form" class="h2">
         <!-- <form onsubmit="handleSumbit()"> -->
@@ -292,6 +346,8 @@
     <h2>heading 2t2o</h2>
     <h2>heading 2t2o</h2>
     <h2>heading 2t2o</h2>
+    <a href="/google">google</a>
+    <a href="/google">google</a>
     <a href="/google">google</a>
     <script>
         let arr = [] // ["ONE", "two"]

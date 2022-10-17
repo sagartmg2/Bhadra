@@ -1,403 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-
     <style>
-        /* 
-            selector{
-                key:value
-            }
-
-            selector
-                - id
-                - class
-                - element 
-            combined sector
-                sector_one.selector_two
-                descendent selector
-                direct child selector
-                attribute selector
-                adjescent selector
-                general selector
-         */
-        /* h1 {
-            color: orange;
-            margin:0px;
-        }
-        p{
-            margin: 0;
-        }
-        h2{
-            margin:0;
-        } */
-
-        * {
-            margin: 0px;
-            padding: 0px;
-            box-sizing: border-box;
-            /* box-sizing: ; */
+        *{
+            margin:0px; 
+            padding:0px;    
+            /* parent-sizing: content-parent;    */
+            box-sizing: border-parent;   
         }
 
-        /* measurement uinits
-            %
-            rem
-            em
-            vh
-            vw
-        */
-
-        body{
-            font-size: 32px;
-        }
-        .box{
-            /* font-size:32px */
-            /* font-size: 2em; */
-            /* font-size: 2rem; */
-        }
-
-        /* 
-            specificity score
-        */
-
-        /* #first , #second, #third{
-            color: teal;
-            background-color: black;
-        } */
-
-
-        /* 0 1 1 */
-        body .black-background {
-            color: black;
-        }
-
-        /* 0 1 0 */
-        .black-background {
-            color: red;
-        }
-
-        .black-background .red {
-            color: red;
-        }
-
-        .black-background>.red {
-            color: red;
-        }
-
-        .black-background {
-            /* color: teal; */
-            /* background-color: black; */
-        }
-
-
-        .black-background {}
-
-        /* #third{
-            color:red;
-        } */
-
-
-
-        /* p {
-            color: red;
-        } */
-
-        /* div p {
-            color: red;
-        }
-
-        p {
-            color: orange;
-        } */
-
-
-
-        /* .task-list{ */
-        /* 0 1 0 */
-        .task-list {
-            color: aquamarine
-        }
-
-        /* 101 */
-        /* #todo li { */
-
-        /* 111 */
-
-        body #todo li {
-            /* #todo li.task-list { */
-            color: rgb(152, 223, 8);
-        }
-
-        /* 101 */
-        #todo li {
-            color: rgb(187, 194, 173);
-        }
-
-        body ul li {
-            /* 0 0 2 */
-            list-style-type: none;
-            color: black !important;
-        }
-
-        body ul li.target {
-            /* 0 0 2 */
-            list-style-type: none;
-            color: black  !important
-        }
-
-        /* ul  001  { */
-        ul {
-            list-style-type: none;
-            color: red;
-        }
-
-        /*
-         specificity score 
-                id class element
-                000
-         */
-
-        /* a {
-            text-decoration: none;
-            color: black
-        } */
-
-        /* input{
-            padding:10px;
-        } */
-
-        /* #target{
-            padding:10px;
-
-        } */
-
-        #first-form [name="task_name"] {
-            padding: 10px;
-        }
-
-        #first-form + h2 + h2 {
-        /* #first-form ~ h2 { */
-            color:rgb(255,0,0);
-        }   
-
-        #first-form + h2 + h2:hover {
-        /* #first-form ~ h2 { */
-            color:rgb(19, 13, 13);
-        }  
-
-        input:focus{
-            padding:10px;
-        }
-
-        /* body h2:first-child{ */
-        /* body h2:nth-child(3n){
-            color:purple
-        } */
-
-        /* h2:first-child{ */
-        /* h2:not(:first-child){ */
-            /*  ! */
-        h2:not(.target-two){   
-            color:purple
-        }
-
-        .required-field{
-            color:red;
-        }
-
-        .required::after{
-            content: "*";
-            color:red;
-        }   
-
-        .box{
-            height:200px;
-            width:400px;
+        .parent{
+            /* width:600px ; */
+            /* border:1px solid black; */
             background-color: teal;
-            display:inline-block;
-            /* border:1px solid red; */
-            /* padding:10px; */
-            /* margin:10px; */
-        }
-        .box.two{
-            background-color: azure;
-        }
-
-        .child{
-            width:200px;
+            /* height:400px; */
             height:200px;
-            background-color: beige;
-            border: 2px solid black;
+            display: flex;
+            flex-wrap: wrap;
+            
+            justify-content:space-between ;
         }
-
-        .container{
-            font-size: 50px;
+        /* 
+            flex
+                main axis - horizontal
+                cross axis - vertically
+        */
+        .children{
+            background-color: purple;
+            color: white;
+            border: 1px solid;
+            height:200px;
+            width: 200px;
+            /* opacity: 0.5; */
+            /* display: inline-block; */
         }
-        
     </style>
 
-    <!-- <link rel="stylesheet" href="../css/style.css"> -->
-
-
 </head>
-
 <body>
 
-    <div class="container">
-        <div class="box">
-            <div class="child">
-            </div>
-            <div class="child">
-            </div>
-        </div>
+    <div class="parent">
+        <div class="children">children</div>
+        <div class="children">children</div>
+        <div class="children">children</div>
     </div>
-    <div class="box two">
-        content
-    </div>
-
-
-    <h2>heading two</h2>
-    <form onsubmit="handleSumbit(event)" id="first-form" class="h2">
-        <!-- <form onsubmit="handleSumbit()"> -->
-        <!-- <input id="target" placeholder="task name" name="task_name" autofocus /> -->
-        <label for="target">task name<span class="required-field">*</span></label>
-        <input id="target" placeholder="task name" name="task_name" />
-        <label>username <span class="required-field">*</span></label>
-        <label class="required">passsowrd</label>
-        <input placeholder="useranme" name="username" />
-        <input type="submit" value="add text" />
-    </form> 
-    <div>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2 class="target-two">heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-        <h2>heading two</h2>
-    </div>
-    <div>
-        <h2>heading two</h2>
-    </div>
-
-    <form onsubmit="handleSumbit(event)" id="second-form">
-        <!-- <form onsubmit="handleSumbit()"> -->
-        <input id="target" placeholder="task name" name="task_name" />
-        <input placeholder="useranme" name="username" />
-        <input type="submit" value="add text" />
-    </form>
-
-    <h2>after second form</h2>
-
-    <h1>Task list</h1>
-    <ul id="task-list">
-    </ul>
-    <h1>end task list</h1>
-
-
-    <ul class="task-list" id="todo">
-        <li>
-            <div>
-                <img src="" alt="">
-                name
-            </div>
-        </li>
-        <li class="task-list" style="color:black">one</li>
-        <li class="task-list">one</li>
-        <li class="task-list">one</li>
-        <li class="task-list">one</li>
-        <li class="task-list">one</li>
-    </ul>
-
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-
-
-
-    <!-- <p style="color:yellow">hello</p> -->
-    <p id="first" class="black-background">hello</p>
-    <p id="second" class="black-background">seoncd p</p>
-    <p id="third" class="black-background red">third<span class="">inner text</span></p>
-    <p id="third" class="black-background">inner<span class="">inner text<span class="red">grand child</span></span></p>
-
-    <div>
-        <span>span text</span>
-        <p>four</p>
-    </div>
-
-    <h1>heading</h1>
-    <h2>heading 2t2o</h2>
-    <h2>heading 2t2o</h2>
-    <h2>heading 2t2o</h2>
-    <h2>heading 2t2o</h2>
-    <h2>heading 2t2o</h2>
-    <h2>heading 2t2o</h2>
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-    <a href="/google">google</a>
-    <script>
-        let arr = [] // ["ONE", "two"]
-
-        function removeTask(index) {
-            // remove the selected element from arr 
-            // re-render  || re-create the <ul>list
-            arr =  arr.filter((el,i) => i != index)
-
-            let str = ""
-
-            arr.forEach((el, index) => {
-                str += `<li>${el}<button onclick="removeTask(${index})">delete</button></li>`
-            })
-
-            document.getElementById("task-list").innerHTML = str
-
-        }
-
-        function handleSumbit(event) {
-            event.preventDefault()
-
-            arr.push(event.target.task_name.value)
-            event.target.task_name.value = ""
-
-            console.log({ arr });
-            let str = ""
-            // arr.forEach)(_)
-            // str = "<li>one</li><li>two</li>"
-
-
-            // let new_li = document.createElement("li")
-            // new_li.innerText = "static text"
-            // document.getElementById("task-list").appendChild(new_li_)
-
-
-            // for(let i  = 0 ;i<arr.length;i++ ){
-
-            // }
-
-            arr.forEach((el, index) => {
-                str += `<li>${el}<button onclick="removeTask(${index})">delete</button></li>`
-            })
-
-            document.getElementById("task-list").innerHTML = str
-
-
-
-        }
-    </script>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, placeat alias labore eum iusto iste similique omnis voluptatum maxime possimus nam accusamus nulla laboriosam, magni architecto distinctio id illo dolorem.</p>
 </body>
-
 </html>

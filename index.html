@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul {
+            display: flex;
+            list-style-type: none;
+        }
+
+        li {
+            margin-left: 10px;
+        }
+
+        main {
+            margin: 20px;
+
+        }
+
+        section {
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 10px;
+            box-shadow: 7px 3px 10px;
+            padding: 10px;
+        }
+
+        section p {
+            text-align: justify;
+        }
+
+        img {
+            height: 150px;
+            width: 150px;
+        }
+
+        .projects {
+            /* display: flex; */
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+
+        @media print {
+            body {
+                color: red;
+            }
+        }
+
+        /* @media (min-width:<brak_point>) { */
+        /* 
+            mobile - first approach 
+         */
+        @media (min-width:768px) {
+
+            .projects {
+                display: flex;
+                justify-content: space-between;
+                gap: 25px;
+            }
+        }
+
+        @media (min-width:922px) {
+            body{
+                font-size: 1.5rem;
+                /* display: none; */
+            }
+            
+            img{
+                height: 200px;
+                width: 200px;
+            }
+        }
+
+        /* 
+        desktop first approach
+
+        screen_size = 1000px
+
+
+        if(screen_size <= 576px ){
+            // apply css 
+        }
+         */
+
+
+        @media (max-width:762px) {
+
+            body {
+                /* display: none; */
+            }
+
+            .projects {
+                /* display: block; */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h1>Company</h1>
+        <ul>
+            <li>home</li>
+            <li>about</li>
+            <li>contact </li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <hr />
+        <h2>projects</h2>
+        <div class="projects">
+            <section>
+                <img src="./git.png">
+                <h2>git</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aspernatur voluptates quae hic
+                    voluptatum
+                    soluta ut. Ipsa quam perspiciatis, voluptatum maxime, molestiae velit optio, officia mollitia
+                    placeat
+                    ipsam suscipit doloremque?</p>
+            </section>
+            <section>
+                <img src="./node.png">
+                <h2>git</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aspernatur voluptates quae hic
+                    voluptatum
+                    soluta ut. Ipsa quam perspiciatis, voluptatum maxime, molestiae velit optio, officia mollitia
+                    placeat
+                    ipsam suscipit doloremque?</p>
+            </section>
+            <section>
+                <img src="./react.png">
+                <h2>git</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aspernatur voluptates quae hic
+                    voluptatum
+                    soluta ut. Ipsa quam perspiciatis, voluptatum maxime, molestiae velit optio, officia mollitia
+                    placeat
+                    ipsam suscipit doloremque?</p>
+            </section>
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

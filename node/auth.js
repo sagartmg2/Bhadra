@@ -10,6 +10,8 @@ const login = () => {  // named export
 
 
 // module.exports = signup
+
+
 // export  default signup  // default export
 
 
@@ -17,7 +19,7 @@ const login = () => {  // named export
 // module.exports.login = login
 
 module.exports = {
-    login,
+    login: login,
     signup,
 }
 

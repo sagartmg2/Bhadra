@@ -1,74 +1,43 @@
 
 
-// let arr = [1, 2];
+const http = require('http');
 
-// function sum() {
+const port = process.env.PORT || 8000;
 
-//     console.log(arr);
-//     let a = 1;
-// }
+const server = http.createServer((req, res) => {
+    // res.setHeader=('Content-Type','text/html');
+    // res.end('<h1> This is the title </h1> <p> and this is the paragraph</p>');
+    // console.log(req.url);
+    // if(req.url == '/index'){
+    // const data=fs.readFileSync('index.html')
+    // res.end(data.toString())
+    // }
 
-// sum()
-// console.log({ a });
+    console.log("inside server");
 
-// 100  mb    -- 20 20 20 20 20
+    res.write("hello world")
+    res.end()
 
-// console.log(process.argv);
-// console.log(process.env);
+    console.log(req.method)
 
-// {
-//     console,
-//     proces
-// }
-
-// require
-// module
-// export
-
-// console.log(__dirname);
-// console.log(__filename);
-// console.log("new");
-
-// axios.get()
-// bcrypt.sing()
-
+})
 
 /* 
-    module
-        core moudle
-        local module
-        third party module
+    CRUD opertors
+    Create   - POSt
+    READ  - GET
+    Update  - PUT / Patch
+    DElete
+*/
+
+/* 
+    HTTP methods
+    GET
+    POST
+    PUT / Patch
+    DELETE
 */
 
 
-// const path = require("path")
 
-// console.log(path.dirname(__filename));
-// console.log(path.join("folder1", "file.js"));
-
-// const fs = require("fs")
-// fs.writeFileSync("custom.txt", "hello world!")
-
-// // fs.writeFile("custom.js", "hello @orld !!", {}, (err, data) => {
-// //     console.log(data);
-// // })
-
-// let data = fs.readFileSync("./custom.txt", { encoding: "utf8" })
-// // console.log(data.toString());
-// console.log(data);
-
-// fs.unlinkSync("./custom.js")
-// fs.appendFile
-
-// const auth = require("./auth")  // common JS module styem
-// import {login} from "./auth.js"  // es6 module system
-const {login} = require("./auth.js")
-
-login()
-
-// console.log(auth.signup());
-// console.log(auth());
-// auth()
-
-
-
+server.listen(port, () => { console.log(`Server is listening on the port on ${port}`) });

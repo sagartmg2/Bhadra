@@ -5,6 +5,7 @@ import { Fragment } from 'react';
 import Card from "./Card"
 import CustomButton, { Button2, Button33 } from "./Button"
 import CustomNameCard from "./BigCard"
+import Product from "./Product"
 
 function App() {
 
@@ -17,6 +18,11 @@ function App() {
         name: "two"
       }
     ]
+
+  return <>
+    <Product name="product one" />
+    <Product name="product two" />
+  </>
 
   return (
     <div>

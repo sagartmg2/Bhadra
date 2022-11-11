@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Fragment } from 'react';
 import Card from "./Card"
 import CustomButton, { Button2, Button33 } from "./Button"
@@ -8,62 +8,27 @@ import CustomNameCard from "./BigCard"
 import Product from "./Product"
 import Counter from './Counter';
 import Count from './Count';
+import SwtichExample from "./ReactSwitch.jsx"
+import Table from "./Table"
+import Todo from './Todo';
 
 function App() {
+  const [url, setUrl] = useState("https://jsonplaceholder.typicode.com/todos");
+  return <>
+    <button onClick={() => setUrl("https://jsonplaceholder.typicode.com/todos")}>fetch todos</button>
+    <button onClick={() => setUrl("https://jsonplaceholder.typicode.com/users")}>fetch users</button>
 
-  // // let arr = [oth, 1st, 2nd]
-  // let arr = [1, 2, 3]
-  // // console.log(arr[1]);
-  // // console.log(arr[0]);
-
-
-  // let products =
-  //   [
-  //     {
-  //       name: "one"
-  //     },
-  //     {
-  //       name: "two"
-  //     }
-  //   ]
-  // // for (let i = 0; condition; i++) {
-  // // for (let i = 0; i < 2; i++) {
-
-
-  // for (let i = 1; i <= products.length; i++) {
-  //   // console.log(i);
-  //   console.log(products[i - 1].name);
-  // }
-
-  // let status = true
-
-  // // setTimeout(() => {
-  // //   status = false
-  // //   console.log({ status });
-  // // }, 2000)
-
-  // console.log("Test");
-
-  // let count = 0;
-
-  // while (status) {
-  //   console.log("do something");
-  //   count++
-  //   if (count > 10) {
-  //     status = false
-  //   }
-  // }
-
-
-
-
-
+    <Count url={url} />
+    {/* <Counter url={url}/> */}
+  </>
+  return <Todo />
+  return <Table />
 
   return <>
-
+    <SwtichExample />
     <Counter />
     <hr />
-    <Count />
+    <Count name="Hari" />
 
   </>
   return <>

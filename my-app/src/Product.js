@@ -31,6 +31,7 @@ export default class Product extends React.Component {
         // console.log(this.props);
 
         return <>
+            <h1>Product</h1>
             <h1>{this.props.name}</h1>
             <p>stock:{this.state.stock}</p>
             {/* <button onClick={this.handleChange()}>change</button> */}

@@ -25,11 +25,22 @@ function Count(props) {
         count: 0
     });
 
+    const [datas, setData] = useState([])
+    /* 
+    componentdidmount
+    componentdidupdate
+ */
     useEffect(() => {
         console.log("use-effect");
-        console.log("call api.");
-        // }, [props, state])
+
+        fetch(`https://jsonplaceholder.typicode.com/${props.url}`)
+            .then(response => response.json())
+            .then(json => setData(json))
+
     }, [props])
+
+    // }, [])
+    // })
 
     const [search_term, setSearchTerm] = useState(" ");
 
@@ -80,6 +91,45 @@ function Count(props) {
                 {/* <button onClick={() => { changeCount("add") }}>add</button>
                 <button onClick={() => changeCount("sub")}>decrement</button> */}
             </>
+            <table border="1px">
+                <thead>
+                    {
+                        props.url == "todos"
+                            ?
+                            <tr>
+                                <th>Title</th>
+                                <th>Completed</th>
+                                <th>Action</th>
+                            </tr>
+                            :
+                            <tr>
+                                <th>name</th>
+                                <th>username</th>
+                                <th>email</th>
+                            </tr>
+
+
+                    }
+                </thead>
+                <tbody>
+                    {
+                        datas.map(el => {
+                            if (props.url == "users") {
+                                return <tr key={el.id}>
+                                    <td>{el.name}</td>
+                                    <td>{el.username}</td>
+                                    <td>{el.email}</td>
+                                </tr>
+                            }
+                            return <tr key={el.id}>
+                                <td>tooo</td>
+                                <td>tooo</td>
+                                <td>tooo</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
         </div>
     );
 }

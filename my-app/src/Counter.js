@@ -88,7 +88,7 @@ export default class Counter extends Component {
                         this.state.todos.map(todo => {
                             return <tr key={todo.id}>
                                 <td>{todo.title}</td>
-                                <td>{todo.completed}</td>
+                                <td>{todo.completed ? "true" : "false"}</td>
                                 <td><button>delete</button></td>
                             </tr>
                         })

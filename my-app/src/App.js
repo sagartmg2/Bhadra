@@ -12,14 +12,50 @@ import SwtichExample from "./ReactSwitch.jsx"
 import Table from "./Table"
 import Todo from './Todo';
 
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import ProtectedRoute from './ProtectedRoute';
+import Login from './Login';
+
 function App() {
-  const [url, setUrl] = useState("https://jsonplaceholder.typicode.com/todos");
+  const [url, setUrl] = useState("todos");
+  console.log("parent-render")
   return <>
-    <button onClick={() => setUrl("https://jsonplaceholder.typicode.com/todos")}>fetch todos</button>
-    <button onClick={() => setUrl("https://jsonplaceholder.typicode.com/users")}>fetch users</button>
+    <BrowserRouter>
+      <nav>
+        <ul>
+          <li><Link to='/users'>users</Link></li>
+          <li><Link to='/products'>products</Link></li>
+          <li><Link to='/products/single-product-id'>single product</Link></li>
+          <li><Link to='/orders'>orders</Link></li>
+          <li><Link to='/login'>login</Link></li>
+          <li><button>logout</button></li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/users" element={<Count url="users" />} />
+        <Route path='/' element={<ProtectedRoute />}>
+          <Route path="/orders" element={<h1>orders route</h1>} />
+          <Route path="/products" >
+            <Route index element={<Product />} />
+            <Route path=":id" element={<h1>Show Single product
+              {/* <Route path=":slug" element={<h1>Show Single product */}
+            </h1>} />
+          </Route>
+        </Route>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+  </>
+  return <>
+
+
+
+
+    <button onClick={() => setUrl("todos")}>fetch todos</button>
+    <button onClick={() => setUrl("users")}>fetch users</button>
 
     <Count url={url} />
-    {/* <Counter url={url}/> */}
+    {/* <Counter url={url} /> */}
   </>
   return <Todo />
   return <Table />

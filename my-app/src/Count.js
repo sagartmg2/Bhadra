@@ -24,6 +24,14 @@ function Count(props) {
     const [state, setstate] = useState({
         count: 0
     });
+    // const [state, setstate] = useState({
+    //     bonus: 100,
+    //     count: 11,
+    //     todos: [
+    //         { userId: 1, id: 1, title: 'delectus aut autem', completed: false },
+    //         { userId: 1, id: 2, title: 'delectus aut autem', completed: false },
+    //     ]
+    // });
 
     const [datas, setData] = useState([])
     /* 

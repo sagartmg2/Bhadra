@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 import { Fragment } from 'react';
 import Card from "./Card"
 import CustomButton, { Button2, Button33 } from "./Button"
@@ -15,36 +15,74 @@ import Todo from './Todo';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginStatus } from './redux/slice/authSlice';
+// export const AuthContext = React.createContext();
+export const AuthContext = createContext();
 
 function App() {
+
+  // const useSelector
+  const login_status = useSelector((state) => state.auth.value)
+  const dispatch = useDispatch();
+
+  console.log({ login_status })
+
+  let initial = localStorage.getItem("login") ? JSON.parse(localStorage.getItem("login")) : false
+  const [status, setStatus] = useState(initial);
+
+  // return <>
+
+  //   <BrowserRouter>
+  //     <Routes>
+  //       <Route path='home' element={<h1>home</h1>} />
+  //       <Route path='login' element={<h1>login</h1>} />
+  //     </Routes>
+  //   </BrowserRouter>
+  // </>
   const [url, setUrl] = useState("todos");
   console.log("parent-render")
+
+  // let status = JSON.parse(localStorage.getItem("login"))
+  // console.log({ status })
+
   return <>
-    <BrowserRouter>
-      <nav>
-        <ul>
-          <li><Link to='/users'>users</Link></li>
-          <li><Link to='/products'>products</Link></li>
-          <li><Link to='/products/single-product-id'>single product</Link></li>
-          <li><Link to='/orders'>orders</Link></li>
-          <li><Link to='/login'>login</Link></li>
-          <li><button>logout</button></li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/users" element={<Count url="users" />} />
-        <Route path='/' element={<ProtectedRoute />}>
-          <Route path="/orders" element={<h1>orders route</h1>} />
-          <Route path="/products" >
-            <Route index element={<Product />} />
-            <Route path=":id" element={<h1>Show Single product
-              {/* <Route path=":slug" element={<h1>Show Single product */}
-            </h1>} />
+    <AuthContext.Provider value={{ status: status, setStatus: setStatus }}>
+      <BrowserRouter>
+        <nav>
+          <ul>
+            <li><Link to='/users'>users</Link></li>
+            <li><Link to='/products'>products</Link></li>
+            <li><Link to='/products/single-product-id'>single product</Link></li>
+            <li><Link to='/orders'>orders</Link></li>
+            <li><Link to='/login'>login</Link></li>
+            {
+              status
+              &&
+              <li><button onClick={() => {
+                localStorage.removeItem("login")
+                console.log("loguout...")
+                dispatch(setLoginStatus(false))
+                // setStatus(false)
+              }}>logout</button></li>
+            }
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/users" element={<Count url="users" />} />
+          <Route path='/' element={<ProtectedRoute />}>
+            <Route path="/orders" element={<h1>orders route</h1>} />
+            <Route path="/products" >
+              <Route index element={<Product />} />
+              <Route path=":id" element={<h1>Show Single product
+                {/* <Route path=":slug" element={<h1>Show Single product */}
+              </h1>} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/login" element={<Login status={status} setStatus={setStatus} />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthContext.Provider>
   </>
   return <>
 

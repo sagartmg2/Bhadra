@@ -10,10 +10,12 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path='login' element={<Login />} />
-          <Route path='signup' element={<Signup />} />
-        </Routes>
+        <div className='container'>
+          <Routes>
+            <Route path='login' element={<Login />} />
+            <Route path='signup' element={<Signup email="em@em.com" />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );

@@ -32,8 +32,10 @@ function Signup(props) {
     }
 
     function handleChange(event) {
+
+        let { name, value, checked, type } = event.target
         // object destructiong // spread... 
-        setPayload({ ...payload, [event.target.name]: event.target.value })
+        setPayload({ ...payload, [name]: type == "checkbox" ? checked : value })
         setError([...errors.filter(el => el.param != event.target.name), { param: event.target.name, msg: "" }])
     }
 
@@ -74,7 +76,7 @@ function Signup(props) {
                     <ErrorMessage errors={errors} name="role" />
                 </div>
                 <div className="mb-3">
-                    <input type="checkbox" id='terms' checked={payload.terms} />
+                    <input type="checkbox" id='terms' checked={payload.terms} name="terms" onChange={handleChange} />
                     <label htmlFor="terms" className="form-label">agree terms and conditions</label>
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={payload.terms ? false : true} >Submit</button>

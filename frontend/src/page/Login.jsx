@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios"
 import ErrorMessage from '../component/ErrorMessage';
+import { useNavigate } from "react-router-dom";
+import Spinner from '../component/Spinner';
 
 const Login = () => {
+    const navigate = useNavigate();
 
     /* 
             database operations CRUD
@@ -34,6 +37,7 @@ const Login = () => {
 
 
     */
+    const [is_submitting, setIsSubmitting] = useState(false)
 
     const [error, setError] = useState(null)
 
@@ -45,15 +49,18 @@ const Login = () => {
 
     function handleSubmit(event) {
         event.preventDefault()
-
-        axios.post("https://mern-ecommerce70.herokuapp.com/api/users/login", payload).then(res => {
-            console.log({ res })
-        }).catch(err => {
-            console.log({ err })
-            if (err.response.status == 400 || err.response.status == 401 ) {
-                setError(err.response.data.msg)
-            }
-        })
+        setIsSubmitting(true)
+        axios.post("https://mern-ecommerce70.herokuapp.com/api/users/login", payload)
+            .then(res => {
+                console.log({ res })
+                navigate("/")
+            }).catch(err => {
+                console.log({ err })
+                if (err.response.status == 400 || err.response.status == 401) {
+                    setError(err.response.data.msg)
+                    setIsSubmitting(false)
+                }
+            })
     }
 
     function handleChange(event) {
@@ -71,7 +78,6 @@ const Login = () => {
                 <div class="alert alert-danger" role="alert">
                     {error}
                 </div>
-
             }
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -87,7 +93,11 @@ const Login = () => {
                         onChange={handleChange}
                         value={payload.password} />
                 </div>
-                <button type="submit" className="btn btn-primary" >Submit</button>
+                <button type="submit" className="btn btn-primary" disabled={is_submitting ? true : false} >{
+                    is_submitting
+                    &&
+                    <Spinner />
+                } Submit</button>
 
             </form>
 

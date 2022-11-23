@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import axios from "axios"
+import ErrorMessage from '../component/ErrorMessage';
 function Signup(props) {
 
     const [email, setEmail] = useState(props.email);
     const [name, setName] = useState("user s name");
+
+
+    const [errors, setError] = useState([])
 
     const [payload, setPayload] = useState({
         name: "name",
@@ -12,22 +16,25 @@ function Signup(props) {
         role: "seller",
         phone: "23423",
         wod: "2",
-        terms: false,
+        terms: true,
     })
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(event.target.email.value)
-
         axios.post("https://mern-ecommerce70.herokuapp.com/api/users/signup", payload).then(res => {
             console.log({ res })
         }).catch(err => {
             console.log({ err })
+            if (err.response.status == 400) {
+                setError(err.response.data.errors)
+            }
         })
     }
 
     function handleChange(event) {
         // object destructiong // spread... 
+        setPayload({ ...payload, [event.target.name]: event.target.value })
+        setError([...errors.filter(el => el.param != event.target.name), { param: event.target.name, msg: "" }])
     }
 
     return (
@@ -37,33 +44,34 @@ function Signup(props) {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" name='name'
-                        onChange={(e) => setPayload({
-                            name: e.target.value
-                        })}
+                    <input type="text" className="form-control " id="name" name='name'
+                        onChange={handleChange}
                         value={payload.name} />
+                    <ErrorMessage errors={errors} name="name" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="email" name='email'
-                        onChange={(e) => setPayload({
-                            email: e.target.value
-                        })}
+                        onChange={handleChange}
                         value={payload.email}
                     />
+                    <ErrorMessage errors={errors} name="email" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">password</label>
                     <input type="password" className="form-control" id="password" name='password'
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                         value={payload.password} />
+                    <ErrorMessage errors={errors} name="password" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="" className="form-label">Role</label>
-                    <select className="form-select" aria-label="Default select example" value={payload.role}>
+                    <select className="form-select" name='role' aria-label="Default select example" value={payload.role}
+                        onChange={handleChange}>
                         <option value="buyer">Buyer</option>
                         <option value="seller">Seller</option>
                     </select>
+                    <ErrorMessage errors={errors} name="role" />
                 </div>
                 <div className="mb-3">
                     <input type="checkbox" id='terms' checked={payload.terms} />

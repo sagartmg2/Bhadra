@@ -2,8 +2,9 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import noImage from "../asset/no-image.jpg"
 import ReactPaginate from "react-paginate"
+import { Link } from "react-router-dom"
 
-const Home = () => {
+const Home = (props) => {
 
     const [products, setProducts] = useState([]);
     const [metadata, setMetaData] = useState({
@@ -14,7 +15,7 @@ const Home = () => {
     const [search_term, setSearchTerm] = useState("")
 
     function fetchProducts() {
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/products?page=${metadata.page}&search_term=${search_term} `)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/products?page=${metadata.page}&search_term=${props.search_term} `)
             .then(res => {
                 console.log(res)
                 setProducts(res.data.data[0].data)
@@ -28,7 +29,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchProducts()
-    }, [metadata.page, search_term]);
+    }, [metadata.page, props.search_term]);
 
     const handlePageClick = (event) => {
         // const newOffset = (event.selected * itemsPerPage) % products.length;
@@ -44,28 +45,36 @@ const Home = () => {
 
     return (
         <>
-            <input value={metadata.search_term} onChange={(e) => setSearchTerm(e.target.value)} />
+            {/* <input value={metadata.search_term} onChange={(e) => setSearchTerm(e.target.value)} /> */}
             <div className='row'>
                 {
                     products.map(product => {
                         return <div className=" col-md-3 p-3" key={product._id}>
                             <div className='card'>
-                                {/* <img src={noImage} className="card-img-top img-thumbnail" alt="..." /> */}
-                                {
-                                    product.images.length == 0
-                                        ?
-                                        <img src={require("../asset/no-image.jpg")} className="card-img-top img-thumbnail" alt="..." />
-                                        :
-                                        <img src={`${product.images[0]}`} className="card-img-top img-thumbnail" alt="..." />
+                                <Link to={`/products/${product._id}`} style={{
+                                    textDecoration: "none",
+                                    color: "black"
+                                }}>
+                                    {/* <img src={noImage} className="card-img-top img-thumbnail" alt="..." /> */}
+                                    {
+                                        product.images.length == 0
+                                            ?
+                                            <img src={require("../asset/no-image.jpg")} className="card-img-top img-thumbnail" alt="..." />
+                                            :
+                                            <img src={`${product.images[0]}`} className="card-img-top img-thumbnail" alt="..." />
 
 
 
-                                }
-                                <div className="card-body">
-                                    <h5 className="card-title">{product.name}</h5>
-                                    <p className="card-text">Rs.{product.price}</p>
-                                    <a href="#" className="btn btn-primary">Add to cart</a>
-                                </div>
+                                    }
+                                    <div className="card-body">
+                                        <div>
+
+                                            <h5 className="card-title">{product.name}</h5>
+                                            <p className="card-text">Rs.{product.price}</p>
+                                        </div>
+                                        <a href="#" className="btn btn-primary">Add to cart</a>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     })

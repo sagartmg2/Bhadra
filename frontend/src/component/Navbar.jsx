@@ -27,12 +27,18 @@ const Navbar = ({ search_term, setSearchTerm }) => {
                         <li className="nav-item">
                             <Link to="/signup" className="nav-link active" aria-current="page" >signup</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to="/orders" className="nav-link active" aria-current="page" >orders</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/cart" className="nav-link active" aria-current="page" >cart</Link>
-                        </li>
+                        {
+                            user?.role === "buyer"
+                            &&
+                            <>
+                                <li className="nav-item">
+                                    <Link to="/orders" className="nav-link active" aria-current="page" >orders</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to="/cart" className="nav-link active" aria-current="page" >cart</Link>
+                                </li>
+                            </>
+                        }
 
                     </ul>
 

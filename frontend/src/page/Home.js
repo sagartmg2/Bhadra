@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import noImage from "../asset/no-image.jpg"
 import ReactPaginate from "react-paginate"
 import { Link } from "react-router-dom"
+import BuyerComponent from '../component/BuyerComponent';
 
 const Home = (props) => {
 
@@ -72,7 +73,9 @@ const Home = (props) => {
                                             <h5 className="card-title">{product.name}</h5>
                                             <p className="card-text">Rs.{product.price}</p>
                                         </div>
-                                        <a href="#" className="btn btn-primary">Add to cart</a>
+                                        <BuyerComponent>
+                                            <a href="#" className="btn btn-primary">Add to cart</a>
+                                        </BuyerComponent>
                                     </div>
                                 </Link>
                             </div>

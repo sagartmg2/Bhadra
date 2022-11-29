@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import BuyerComponent from '../../component/BuyerComponent';
 
 const Show = () => {
     const { id } = useParams()
+
+    const { user } = useSelector((state) => state.user)
+    const navigate = useNavigate();
 
     const [product, setProduct] = useState({});
     const [review, setReview] = useState({
@@ -30,8 +35,27 @@ const Show = () => {
         return <span class="badge bg-secondary mx-2">{brand}</span>
     })
 
-    const updateReview = () => {
+    const updateReview = (e) => {
+        e.preventDefault();
+
+        // check if looged in , else redirect
+        checkAuth();
+
         console.log("update review");
+    }
+
+    const checkAuth = () => {
+        if (!user) {
+            navigate("/login")
+        }
+    }
+
+    const addToCart = () => {
+
+        checkAuth();
+        // check if looged in , else redirect
+
+        console.log("add to cart");
     }
 
     return (
@@ -73,7 +97,9 @@ const Show = () => {
                     <p>in_stock: {product.in_stock}</p>
                     <p>description: {product.description}</p>
                     <hr />
-                    <button>add to cart</button>
+                    <BuyerComponent>
+                        <button onClick={addToCart}>add to cart</button>
+                    </BuyerComponent>
                 </div>
             </div>
             <hr />
@@ -91,17 +117,20 @@ const Show = () => {
                         })
                 }
                 <hr />
-                <form onSubmit={updateReview}>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Rating *</label>
-                        <input min={1} max={5} className="form-control" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="" class="form-label">comment</label>
-                        <textarea className='form-control'>{review.comment}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                <BuyerComponent>
+                    <form onSubmit={updateReview}>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Rating *</label>
+                            <input min={1} max={5} className="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">comment</label>
+                            <textarea className='form-control'>{review.comment}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </BuyerComponent>
+
 
             </div>
 

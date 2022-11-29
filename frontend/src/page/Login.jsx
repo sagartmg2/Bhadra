@@ -3,9 +3,12 @@ import axios from "axios"
 import ErrorMessage from '../component/ErrorMessage';
 import { useNavigate } from "react-router-dom";
 import Spinner from '../component/Spinner';
+import { setUser } from '../redux/slice/UserSlice';
+import { useDispatch } from "react-redux"
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     /* 
             database operations CRUD
@@ -53,7 +56,22 @@ const Login = () => {
         axios.post("https://mern-ecommerce70.herokuapp.com/api/users/login", payload)
             .then(res => {
                 console.log({ res })
-                navigate("/")
+
+                axios.get(`${process.env.REACT_APP_SERVER_URL}/users/get-user`, {
+                    headers: {
+                        Authorization: `Bearer ${res.data.access_token}`
+                    }
+                })
+                    .then(user_res => {
+                        localStorage.setItem("access_token", res.data.access_token)
+                        dispatch(setUser(user_res.data))
+                        navigate("/")
+
+
+                    }).catch(err => {
+
+                    })
+
             }).catch(err => {
                 console.log({ err })
                 if (err.response.status == 400 || err.response.status == 401) {

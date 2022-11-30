@@ -39,6 +39,15 @@ const Navbar = ({ search_term, setSearchTerm }) => {
                                 </li>
                             </>
                         }
+                        {
+                            user?.role === "seller"
+                            &&
+                            <>
+                                <li className="nav-item">
+                                    <Link to="/products/create" className="nav-link active" aria-current="page" >create product</Link>
+                                </li>
+                            </>
+                        }
 
                     </ul>
 

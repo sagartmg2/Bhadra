@@ -43,6 +43,28 @@ const Home = (props) => {
     };
 
 
+    function addToCart(product) {
+        // event.preventPropagation();
+        console.log("add to cart", product)
+
+        /* 
+        
+            cart_items :[
+                {
+                    _id:1,
+                    quantity:1
+                    name,
+                    price,
+                }
+                {
+                    _id:2,
+                    quantity:4
+                }
+            ]
+        */
+
+    }
+
 
     return (
         <>
@@ -73,11 +95,14 @@ const Home = (props) => {
                                             <h5 className="card-title">{product.name}</h5>
                                             <p className="card-text">Rs.{product.price}</p>
                                         </div>
-                                        <BuyerComponent>
-                                            <a href="#" className="btn btn-primary">Add to cart</a>
-                                        </BuyerComponent>
+
                                     </div>
                                 </Link>
+                                <BuyerComponent>
+                                    <button type='button' className="btn btn-primary"
+                                        onClick={() => addToCart(product)}
+                                    >Add to cart</button>
+                                </BuyerComponent>
                             </div>
                         </div>
                     })

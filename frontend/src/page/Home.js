@@ -4,9 +4,12 @@ import noImage from "../asset/no-image.jpg"
 import ReactPaginate from "react-paginate"
 import { Link } from "react-router-dom"
 import BuyerComponent from '../component/BuyerComponent';
+import SellerComponent from '../component/SellerComponent';
+import { useDispatch } from 'react-redux';
+import { setCart } from '../redux/slice/CartSlice';
 
 const Home = (props) => {
-
+    const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
     const [metadata, setMetaData] = useState({
         total: 0,
@@ -42,10 +45,25 @@ const Home = (props) => {
         setMetaData({ ...metadata, page: event.selected + 1 })
     };
 
+    function deleteProduct(id) {
+        let url = `${process.env.REACT_APP_SERVER_URL}/products/${id}`
+
+        axios.delete(url, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then(res => {
+                fetchProducts()
+            })
+
+    }
 
     function addToCart(product) {
         // event.preventPropagation();
         console.log("add to cart", product)
+        dispatch(setCart(product))
+
 
         /* 
         
@@ -103,11 +121,26 @@ const Home = (props) => {
                                         onClick={() => addToCart(product)}
                                     >Add to cart</button>
                                 </BuyerComponent>
+                                <SellerComponent>
+                                    <div style={{
+                                        display: "flex",
+                                        justifyContent: "space-around"
+                                    }}>
+
+                                        <Link to={`/products/edit/${product._id}`}>
+                                            <button type='button' className="btn btn-primary"
+                                            >edit</button>
+                                        </Link>
+                                        <button type='button' className="btn btn-danger"
+                                            onClick={() => deleteProduct(product._id)}
+                                        >delete</button>
+                                    </div>
+                                </SellerComponent>
                             </div>
                         </div>
                     })
                 }
-            </div>
+            </div >
             <div className='pagination-wrapper'>
                 <ReactPaginate
                     breakLabel="..."

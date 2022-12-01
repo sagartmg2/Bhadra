@@ -10,8 +10,38 @@ export let CartSlice = createSlice({
     initialState,
     reducers: {
         setCart: (state, action) => {
-            state.cart_items = action.payload
-            // state = action.payload
+
+            /* 
+                {
+                    price,
+                    _id:
+                    quantiy
+                    name
+                }
+             */
+
+
+            let temp = [...state.cart_items]
+
+            let existing_product = temp.find(cart_product => cart_product._id === action.payload._id)
+
+            if (existing_product) {
+                temp = temp.map(el => {
+                    return {
+                        ...el,
+                        quantity: el.quantity + 1
+                    }
+                })
+            } else {
+                temp.push({
+                    ...action.payload,
+                    quantity: 1
+                })
+            }
+
+
+
+            state.cart_items = temp
         },
 
     },

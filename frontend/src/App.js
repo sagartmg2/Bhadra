@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from './redux/slice/UserSlice';
 import ProtectedRoute from './component/ProtectedRoute';
-import Create from './page/Product/Create';
+import Upsert from './page/Product/Upsert';
 
 export default function App() {
   const dispatch = useDispatch()
@@ -70,7 +70,8 @@ export default function App() {
             <Route path='' element={<Home search_term={search_term} />} />
             <Route path='products'>
               <Route index element={<Home search_term={search_term} />} />
-              <Route path='create' element={<Create />} />
+              <Route path='create' element={<Upsert />} />
+              <Route path='edit/:id' element={<Upsert />} />
               <Route path=':id' element={<Show />} />
             </Route>
             <Route path='login' element={<Login />} />

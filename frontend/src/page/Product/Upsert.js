@@ -1,8 +1,10 @@
 import axios from 'axios';
 import Reac, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const Create = () => {
+const Upsert = () => {
 
+    const { id } = useParams();
 
     const [product, setProduct] = useState({
         name: "",
@@ -10,6 +12,15 @@ const Create = () => {
         images: [],
         categories: ["one"]
     })
+
+    useEffect(() => {
+        if (id) {
+            axios.get(`https://mern-ecommerce70.herokuapp.com/api/products/${id}`)
+                .then(res => {
+                    setProduct(res.data.data)
+                })
+        }
+    }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,10 +38,24 @@ const Create = () => {
 
         let temp = [...product.images]
         temp.forEach(img => {
-            form_data.append("images", img)
+
+            if (typeof (img) == "string") {
+                form_data.append("images[]", img)
+            }else{
+                form_data.append("images", img)
+            }
+
         })
 
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/products`, form_data, {
+        let method = "post"
+        let url = `${process.env.REACT_APP_SERVER_URL}/products`
+        if (id) {
+            method = "put"
+            url = `${process.env.REACT_APP_SERVER_URL}/products/${id}`
+
+        }
+
+        axios[method](url, form_data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -47,7 +72,7 @@ const Create = () => {
         if (event.target.type == "file") {
             setProduct({
                 ...product,
-                images: event.target.files
+                images: [...product.images, ...event.target.files]
             })
         } else {
             setProduct({ ...product, [event.target.name]: event.target.value })
@@ -85,6 +110,26 @@ const Create = () => {
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">image</label>
+                    <hr />
+                    {
+                        product.images.map(image => {
+                            let src = "";
+                            if (typeof (image) == "string") {
+                                src = image
+                            } else {
+                                src = URL.createObjectURL(image)
+                            }
+
+                            return <img src={src}
+                                style={{
+                                    height: "150px",
+                                    width: "150px",
+                                    margin: "10px"
+                                }}
+                            />
+                        })
+                    }
+                    <hr />
                     <input type="file" multiple class="form-control" id="" name='images' onChange={handlechange} />
                 </div>
 
@@ -94,4 +139,4 @@ const Create = () => {
     );
 }
 
-export default Create;
+export default Upsert;

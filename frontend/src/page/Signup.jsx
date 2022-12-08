@@ -21,7 +21,7 @@ function Signup(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        axios.post("https://mern-ecommerce70.herokuapp.com/api/users/signup", payload).then(res => {
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/users/signup`, payload).then(res => {
             console.log({ res })
         }).catch(err => {
             console.log({ err })

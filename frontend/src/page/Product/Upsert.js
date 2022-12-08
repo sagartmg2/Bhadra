@@ -15,7 +15,7 @@ const Upsert = () => {
 
     useEffect(() => {
         if (id) {
-            axios.get(`https://mern-ecommerce70.herokuapp.com/api/products/${id}`)
+            axios.get(`${process.env.REACT_APP_SERVER_URL}/products/${id}`)
                 .then(res => {
                     setProduct(res.data.data)
                 })

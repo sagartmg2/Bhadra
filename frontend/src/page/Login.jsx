@@ -53,7 +53,7 @@ const Login = () => {
     function handleSubmit(event) {
         event.preventDefault()
         setIsSubmitting(true)
-        axios.post("https://mern-ecommerce70.herokuapp.com/api/users/login", payload)
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, payload)
             .then(res => {
                 console.log({ res })
 

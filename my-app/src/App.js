@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import { Fragment } from 'react';
+import axios from "axios"
+
 import Card from "./Card"
 import CustomButton, { Button2, Button33 } from "./Button"
 import CustomNameCard from "./BigCard"
@@ -21,6 +23,16 @@ import { setLoginStatus } from './redux/slice/authSlice';
 export const AuthContext = createContext();
 
 function App() {
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/products")
+      .then(res => {
+      })
+  }, []);
+
+  return <>
+    <h1>products</h1>
+  </>
 
   // const useSelector
   const login_status = useSelector((state) => state.auth.value)

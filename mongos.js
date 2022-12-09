@@ -101,3 +101,10 @@ db.students.insertMany([
     },
 
 ])
+
+db.students.find({ $and: [{ name: "gita" }, { sports: { $in: ["football"] } }] })
+
+db.students.insertOne({
+    name: 'gita',
+    sports: ['volleball', 'football', 'cricket']
+})

@@ -4,9 +4,11 @@
 const express = require("express") // common js  module
 // const path = require("path")
 // const fs = require("fs")
-
+const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());  // gloal middleware. 
+
+mongoose.set('strictQuery', false);
 
 
 /* 
@@ -66,6 +68,17 @@ app.get("/api/orders", auth_middleware, (req, res) => {
     res.send([{ id: "list of orders..." }, {}])
 })
 
+app.get("/api/students", (req, res) => {
+
+    let students = [] // fetch from database. 
+
+    res.send([])
+})
+
+mongoose.connect('mongodb://localhost:27017/hospital')
+    .then(() => console.log('Connected!'));
+
 app.listen(8000, (data) => {
     console.log("lilstenin server....");
-})   
+})
+

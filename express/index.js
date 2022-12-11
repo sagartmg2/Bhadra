@@ -2,9 +2,11 @@
 
 // import  express from "expres" // es6 module system
 const express = require("express") // common js  module
+const { body, validationResult } = require('express-validator');
 // const path = require("path")
 // const fs = require("fs")
 const mongoose = require('mongoose');
+const Product = require("./model/Product")
 const app = express();
 app.use(express.json());  // gloal middleware. 
 
@@ -47,20 +49,62 @@ app.get("/", (req, res) => {
     res.send("welcome to expreess")
 })
 
-app.get("/api/products", (req, res) => {
-    res.send([{ id: 1, name: "One" }, { id: 2, name: "Two" }])
+app.get("/api/products", async (req, res, next) => {
+    let products = await Product.find()
+    res.send({
+        data: products
+    })
 })
 
-app.post("/api/products", (req, res) => {
-    console.log("body", req.body);
-
+app.delete("/api/products/:id", async (req, res, next) => {
     /* 
-        DBProduct.createOne({name: req.body.name})
+        db.products.updateOne({_id:123},{$set:{req.body}})
     */
-
-    res.send("product created.")
-    // res.send([{ id: "prodouct 1" }, {}])
+    // let product = await Product.findByIdAndUpdate(req.params.id, { ...req.body }, {
+    //     new: true
+    // })
+    let product = await Product.findByIdAndDelete(req.params.id)
+    res.send({
+        data: product
+    })
 })
+
+app.post("/api/products",
+    body('price').isNumeric().withMessage("must be numeric"),
+    (req, res, next) => {
+        // Finds the validation errors in this request and wraps them in an object with handy functions
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        } else {
+            next()
+        }
+
+    },
+    async (req, res, next) => {
+        console.log("body", req.body);
+
+        /* 
+        db.products.inserOne
+            DBProduct.createOne({name: req.body.name})
+        */
+        try {
+            await Product.create({
+                name: req.body.name,
+                price: req.body.price,
+            })
+
+            console.log("product_created..")
+
+            res.send("product created.")
+        }
+        catch (err) {
+            // console.log(err.message);
+            next(err)
+        }
+
+        // res.send([{ id: "prodouct 1" }, {}])
+    })
 
 app.get("/api/orders", auth_middleware, (req, res) => {
     console.log(req.query);
@@ -75,8 +119,37 @@ app.get("/api/students", (req, res) => {
     res.send([])
 })
 
+
 mongoose.connect('mongodb://localhost:27017/hospital')
-    .then(() => console.log('Connected!'));
+    .then(() => console.log('Connected!'))
+    .catch(err => {
+        console.log(err);
+    })
+
+
+app.use((err, req, res, next) => {
+
+    let status_code = 500;
+    let msg = "Server Error"
+    let errors = [];
+
+
+    if (err.name == "ValidationError") {
+        status_code = 400;
+        msg = "Bad request"
+        Object.entries(err.errors).map(error => {
+            errors.push({
+                param: error[0],
+                msg: error[1].message
+            })
+        })
+    }
+
+    res.status(status_code).send({
+        msg: msg,
+        errors
+    })
+})
 
 app.listen(8000, (data) => {
     console.log("lilstenin server....");

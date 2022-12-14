@@ -22,9 +22,9 @@ const ProductSchema = new Schema({
         type: String,
         maxLength: 255,
     },
-    categories: [],
+    categories: [String],
     brands: {
-        type: Array,
+        type: [String],
     },
     created_by: {
         type: ObjectId,
@@ -32,7 +32,7 @@ const ProductSchema = new Schema({
         required: true,
     },
     images: {
-        type: Array
+        type: [String]
     }
 });
 

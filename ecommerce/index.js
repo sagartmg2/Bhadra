@@ -1,4 +1,5 @@
 const express = require("express")
+const Product = require("./model/Product")
 const app = express()
 
 const auth_route = require("./route/auth")
@@ -18,24 +19,41 @@ app.use((err, req, res, next) => {
     let msg = "Server Error"
     let errors = [];
 
+    console.log(err.name)
+    // console.log(err.message)
+    console.log("code", err.code)
+    // console.log(err)
+
 
     if (err.name == "ValidationError") {
         status_code = 400;
         msg = "Bad request"
-        
+
         Object.entries(err.errors).map(error => {
             errors.push({
                 param: error[0],
                 msg: error[1].message
             })
         })
+    } else {
+        if (err.code == 11000) {
+            status_code = 400;
+            msg = "Bad request"
+            errors.push({
+                param: "email",
+                msg: "Duplicate email "
+            })
+        }
     }
 
     res.status(status_code).send({
         msg: msg,
-        errors
+        errors,
+        erro: err.message
     })
 })
+
+// Product.
 
 require("./config/database")
 app.listen(process.env.PORT, () => {

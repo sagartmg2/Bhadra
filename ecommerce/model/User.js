@@ -9,13 +9,15 @@ const UserSchema = new Schema({
         required: true  // mongoose schema validation, database validation 
     },
     email: {
+        unique: true,
         type: String,
         required: true,
     },
     password: {
         type: String,
         minLength: 8,
-        required: true
+        required: true,
+        select: false,
     },
     role: {
         required: true,

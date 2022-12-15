@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken")
 
 const multer = require('multer')
 const path = require("path")
+const { isSeller, checkAuthentication } = require("../middleware/auth")
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -21,48 +22,28 @@ const upload = multer({ storage: storage })
 const router = express.Router();
 
 router.get("/products", async (req, res, next) => {
-    let products = await Product.find({})
+    // console.log(req.query);
+    // return;
+    // let products = await Product.find({
+    //     name: RegExp(`${req.query.search_term}`, "i")
+    // })
+
+    /* 
+        aggregation  - advance find method 
+    */
+
+    let products = await Product.aggregate([
+        {
+            $match: {
+                name: RegExp(`${req.query.search_term}`, "i")
+            }
+        }
+    ])
+
     res.send(products)
 })
 
-const checkAuthentication = async (req, res, next) => {
-    let logged = false;
 
-    let token = req.headers.authorization?.split(" ")[1] || null
-    // let token = req.headers.authorization
-    /* 
-        VERIFY THE TOKEN FROM REQUEST. 
-    */
-    if (token) {
-        try {
-            let decoded = await jwt.verify(token, 'shhhhh');
-            req.user = decoded
-            if (decoded) {
-                return next();
-            }
-        }
-        catch (err) {
-        }
-    }
-
-    res.status(401).send({
-        data: "not looged in. "
-    })
-
-
-}
-
-const isSeller = (req, res, next) => {
-    if (req.user.role == "seller") {
-        return next()
-    }
-    else {
-        return res.status(403).send({
-            data: "Access denied"
-        })
-    }
-
-}
 
 router.post("/products", checkAuthentication, isSeller, upload.array('images', 12), async (req, res, next) => {
 

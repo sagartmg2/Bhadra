@@ -4,6 +4,7 @@ const app = express()
 
 const auth_route = require("./route/auth")
 const product_route = require("./route/product")
+const order_route = require("./route/order")
 
 require('dotenv').config() // can read .env file
 app.use(express.json())   // can read req body
@@ -12,6 +13,8 @@ app.use(express.static('uploads'))
 
 app.use("/api", auth_route)
 app.use("/api", product_route)
+app.use("/api", order_route)
+
 
 /* 
 error handler 

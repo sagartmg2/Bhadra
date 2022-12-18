@@ -26,11 +26,22 @@ const ProductSchema = new Schema({
     brands: {
         type: [String],
     },
+    /* reference document  */
     created_by: {
         type: ObjectId,
         ref: "User",
         required: true,
     },
+    /* 
+    embedded document 
+    created_by: {
+        _id: {
+            type: ObjectId
+        },
+        name: String,
+        email: String,
+    },
+    */
     images: {
         type: [String]
     }

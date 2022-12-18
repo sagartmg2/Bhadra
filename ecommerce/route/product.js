@@ -32,15 +32,80 @@ router.get("/products", async (req, res, next) => {
         aggregation  - advance find method 
     */
 
+    /* 
+    
+    aggregration - pipeline
+    aggregration - framework 
+    
+    */
+
+
+    let per_page = parseInt(req.query.per_page) || 3;
+    let page = parseInt(req.query.page) || 1
+
+    console.log(per_page)
+    console.log(page)
+
     let products = await Product.aggregate([
         {
             $match: {
                 name: RegExp(`${req.query.search_term}`, "i")
             }
-        }
+        },
+        {
+            $match: {
+                price: { $lt: 1000 }
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "created_by",
+                foreignField: "_id",
+                as: "created_by"
+            }
+        },
+        {
+            $unwind: "$created_by"
+        },
+        {
+            $project: {
+                "created_by.password": 0
+            }
+        },
+        {
+            $skip: (page - 1) * per_page
+        },
+        {
+            $limit: per_page
+        },
     ])
 
-    res.send(products)
+    let products_count = await Product.aggregate([
+        {
+            $match: {
+                name: RegExp(`${req.query.search_term}`, "i")
+            }
+        },
+        {
+            $match: {
+                price: { $lt: 1000 }
+            }
+        },
+        {
+            $count: "total"
+        },
+
+    ])
+
+    res.send({
+        meta: {
+            total: products_count[0]?.total,
+            page,
+            per_page
+        },
+        data: products,
+    })
 })
 
 
